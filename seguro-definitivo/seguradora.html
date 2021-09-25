@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Seguro Fiança</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+	<!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.4.0-rc.0/web3.min.js"></script>
+
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <div class="container-fluid">
+	    <a class="navbar-brand" href="#">ALUG</a>
+	   
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav">
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+	        </li>
+	         <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="segurado.html">Segurado</a>
+	        </li>
+	         <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="seguradora.html">Seguradora</a>
+	        </li>
+	       
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+	<div class="container-fluid" style="background-color: black;">
+		<div class="row">
+			<div class="col-4">
+				<br><br>
+				<div class="input-group mb-3">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-4">
+						<input type="text" class="form-control" name="cadastro" id="cadastro"aria-describedby="button-addon2">
+					</div>
+					
+				 	<button id="getme" class="btn" onclick="getDados()"id="button-addon2"style="background-color:#CFFF00;">Pegar dados</button>
+				</div>
+				<div class="row mb-3">
+					<label for="inputEmail3" class="col-sm-2 col-form-label"><font color="#CFFF00"><h7>Carteira: </h7></font></label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" name="carteira" id="carteira">
+				    </div>
+				</div>
+				<div class="row mb-3">
+					<label for="inputEmail3" class="col-sm-6 col-form-label"> <font color="#CFFF00">Pagamentos Efetuados:</font></label>
+				    <div class="col-sm-6">
+				      <input  type="text" class="form-control" name="pagamentoPremio" id="pagamentoPremio">
+				    </div>
+				</div>
+				<div class="row mb-3">
+					<label for="inputEmail3" class="col-sm-6 col-form-label"> <font color="#CFFF00">Recebimento de Sinistros:</font> </label>
+				    <div class="col-sm-6">
+				       <input type="text" class="form-control" name="recebimentoSinistro" id="recebimentoSinistro">
+				    </div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-6 col-form-label"><font color="#CFFF00"> Duração do Contrato:</font> </label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="duracaoContrato" id="duracaoContrato">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-5 col-form-label"><font color="#CFFF00"> <font color="#CFFF00"> Status de Seguro:</font> </font> </label>
+					<div class="col-sm-7">
+						 <input type="text"class="form-control"name="ehSegurado" id="ehSegurado">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-3 col-form-label"><font color="#CFFF00"> Apólice:</font> </label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control" name="valorApolice" id="valorApolice">
+					</div>
+				</div>
+				
+				<div class="row mb-3">
+					<label class="col-sm-4 col-form-label"><font color="#CFFF00">Valor da parcela:</font>  </label>
+					<div class="col-sm-8">
+						<input type="text" class="form-control" name="premioParcelado" id="premioParcelado">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-6 col-form-label"><font color="#CFFF00">Valor do Sinistro:</font> </label>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" name="valorSinistro" id="valorSinistro">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-5 col-form-label"><font color="#CFFF00">Aluguel do imóvel:</font>  </label>
+					<div class="col-sm-7">
+						 <input type="text" class="form-control" name="aluguel" id="aluguel">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-4 col-form-label"><font color="#CFFF00">Parcelas: </font> </label>
+					<div class="col-sm-8">
+						 <input type="text"  class="form-control"  name="parcelasApolice" id="parcelasApolice">
+					</div>
+				</div>
+					
+			</div>
+			<div class="col-4">
+				<br><br>
+				<div class="input-group mb-3">
+					<div class="col-sm-4"></div>
+					<div class="col-sm-4">
+						<input type="text"  class="form-control" name="cadastro1" id="cadastro1"aria-describedby="button-addon2">
+					</div>
+					
+				 	<button class="btn"style="background-color:#CFFF00;" id="getme" id="button-addon2"onclick="pagarSinistro()">Pagar Sinistro</button>
+				</div>
+				
+				<div class="row mb-3">
+					<div class="d-grid gap-2">
+						<button id="getme" class="btn"style="background-color:#CFFF00;"  onclick="getMontante()">Montante</button>
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-5 col-form-label"><font color="#CFFF00">Taxa da Seguradora: </font> </label>
+					<div class="col-sm-7">
+						 <input type="text" class="form-control" name="montanteSeguradora" id="montanteSeguradora">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-5 col-form-label"><font color="#CFFF00">Pool: </font>  </label>
+					<div class="col-sm-7">
+						  <input type="text"class="form-control" name="montanteSeguro" id="montanteSeguro">
+					</div>
+				</div>
+				<div class="row mb-3">
+					<label class="col-sm-6 col-form-label"><font color="#CFFF00">Quantidade de segurados:  </font>  </label>
+					<div class="col-sm-6">
+						  <input type="text" class="form-control" name="contTotal" id="contTotal"><br>
+					</div>
+				</div>
+				
+				
+
+			</div>
+			<div class="col-4">
+				<br><br>
+				<button id="getme" class="btn" style="background-color:#CFFF00;" onclick="devolucao()">Finalizar Contrato</button><br>
+				<font color="#CFFF00">Valor devolvido para cada segurado:  </font><input type="text"class="form-control" name="dinheiro" id="dinheiro"><br>
+			</div>
+			<br><br>
+		</div>
+
+		
+
+		
+	</div>
+	
+	
+
+	<div class="container">
+
+	  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+	    <div class="col-md-4 d-flex align-items-center">
+	      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+	        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+	      </a>
+	      <span class="text-muted">© 2021 ALUG, Inc</span>
+	    </div>
+
+	    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+	      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+	      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+	      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+	    </ul>
+	  </footer>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+	<button class="enableEthereumButton"></button>
+	<script type="text/javascript">
+		const ethereumButton = document.querySelector('.enableEthereumButton');
+
+		ethereumButton.addEventListener('click', () => {
+		  //Will Start the metamask extension
+		  ethereum.request({ method: 'eth_requestAccounts' });
+		});
+
+		const ethEnabled = async () => {
+		  if (window.ethereum) {
+    			await window.ethereum.send('eth_requestAccounts');
+					window.web3 = new Web3(window.ethereum);
+					window.Seguro = new window.web3.eth.Contract([
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "duracaoContrato",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "aluguel",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "parcelas",
+					"type": "uint256"
+				}
+			],
+			"name": "contratarSeguro",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "cadastro",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "nonpayable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "pagarPremio",
+			"outputs": [],
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "cadastro",
+					"type": "uint256"
+				}
+			],
+			"name": "receberSinistro",
+			"outputs": [],
+			"stateMutability": "payable",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "devolucao",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "dinheiroDevolvido",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "cadastro",
+					"type": "uint256"
+				}
+			],
+			"name": "getDados",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "carteira",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "pagamentos",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "recebimentoSinistro",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "duracaoContrato",
+					"type": "uint256"
+				},
+				{
+					"internalType": "bool",
+					"name": "ehSegurado",
+					"type": "bool"
+				},
+				{
+					"internalType": "uint256",
+					"name": "valorApolice",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "ParcelaPremio",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "valorSinistro",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "aluguel",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "parcelasApolice",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "getInformacao",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		},
+		{
+			"inputs": [],
+			"name": "getMontante",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"stateMutability": "view",
+			"type": "function"
+		}
+		], '0x84734C4b413fab6c9782aEFa48916368d741a4a6');
+					saveCoinbase();
+					return true;
+  		  }
+		  return false;
+		}
+
+
+		async function saveCoinbase () {
+		  window.coinbase = await window.web3.eth.getCoinbase();
+		};
+
+
+		async function contratarSeguro () {
+			var duracaoContrato = document.getElementById("duracaoContrato").value;
+			var aluguel = document.getElementById("aluguel").value;
+			var parcelas = document.getElementById("parcelas").value;
+		  	window.Seguro.methods.contratarSeguro(duracaoContrato,aluguel,parcelas).send(duracaoContrato,aluguel,parcelas, {from:window.coinbase}).then(console.log);
+
+		}
+
+		async function pagarPremio () {
+		  window.Seguro.methods.pagarPremio().send({from:window.coinbase});
+		}
+
+		async function pagarSinistro () {
+			var cadastro1 = document.getElementById("cadastro1").value;
+		  	window.Seguro.methods.receberSinistro(cadastro1).send(cadastro1,{from:window.coinbase}).then(console.log);
+		}
+		async function devolucao () {
+		  var dados = window.Seguro.methods.devolucao().call({from:window.coinbase});
+		  var val = await dados;
+
+		  document.getElementById("dinheiro").value = val;
+		}
+
+		async function getDados () {
+			var cadastro = document.getElementById("cadastro").value;
+		  	var dados = window.Seguro.methods.getDados(cadastro).call({from:window.coinbase});
+		  	var val = await dados;
+
+		  	document.getElementById("carteira").value = val[0];
+		  	document.getElementById("pagamentoPremio").value = val[1];
+		  	document.getElementById("recebimentoSinistro").value = val[2];
+		  	document.getElementById("duracaoContrato").value = val[3];
+		  	document.getElementById("ehSegurado").value = val[4];
+		  	document.getElementById("valorApolice").value = val[5];
+		  	document.getElementById("premioParcelado").value = val[6];
+		  	document.getElementById("valorSinistro").value = val[7];
+		  	document.getElementById("aluguel").value = val[8];
+		  	document.getElementById("parcelasApolice").value = val[9];
+		};
+		async function getInformacao () {
+		  var dados = window.Seguro.methods.getInformacao().call({from:window.coinbase});
+		  var val = await dados;
+
+		  document.getElementById("carteira").value = val[0];
+		  document.getElementById("pagamentoPremio").value = val[1];
+		  document.getElementById("valorApolice").value = val[2];
+		  document.getElementById("premioParcelado").value = val[3];
+		  document.getElementById("parcelasApolice").value = val[4];
+		}
+		async function getMontante () {
+		  var dados = window.Seguro.methods.getMontante().call({from:window.coinbase});
+		  var val = await dados;
+
+		  document.getElementById("montanteSeguradora").value = val[0];
+		  document.getElementById("montanteSeguro").value = val[1];
+		  document.getElementById("contTotal").value = val[2];
+		}
+
+		if (!ethEnabled()) {
+		  alert("Metamask or browser with Ethereum not detected!");
+		}
+	</script>
+</body>
+</html>
+
+
+  

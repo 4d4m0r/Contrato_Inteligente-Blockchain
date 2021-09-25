@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Seguro Fiança</title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+
+	<!-- <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.34/dist/web3.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.4.0-rc.0/web3.min.js"></script>
+	
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <div class="container-fluid">
+	    <a class="navbar-brand" href="#">ALUG</a>
+	   
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	      <ul class="navbar-nav">
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="index.html">Home</a>
+	        </li>
+	         <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="segurado.html">Segurado</a>
+	        </li>
+	         <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="seguradora.html">Seguradora</a>
+	        </li>
+	       
+	      </ul>
+	    </div>
+	  </div>
+	</nav>
+
+	<div class="container-fluid" style="background-color: #CFFF00;">
+		<br><br>
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-5">
+				<div class="d-grid gap-1 col-4 mx-auto">
+					<br><br><br><br><br><br>
+					<button data-bs-toggle="modal" data-bs-target="#exampleModal" style="background-color: #000000;"class="btn" type="button"id="getme" onclick="pagarPremio()"><font color="#CFFF00">Realizar pagamento.</font></button><br><br>
+				</div>
+			</div>
+			
+			
+			
+			<div class="col-4">
+				<button id="getme" onclick="getInformacao()">Pegar dados</button><br>
+				<div class="mb-3">
+				  Carteira: <input type="text" class="form-control" name="carteira" id="carteira">
+				</div>
+				<div class="mb-3">
+				  Pagamentos Efetuados: <input type="text" class="form-control" name="pagamentoPremio" id="pagamentoPremio">
+				</div>
+				<div class="mb-3">
+				  Apólice: <input type="text" class="form-control" name="valorApolice" id="valorApolice">
+				</div>
+				<div class="mb-3">
+				  Valor da parcela: <input type="text" class="form-control" name="premioParcelado" id="premioParcelado">
+				</div>
+				<div class="mb-3">
+				  Parcelas: <input type="text" class="form-control" name="parcelasApolice" id="parcelasApolice">
+				</div>
+			</div>
+			<div class="col-2"></div>
+		</div>
+	</div>
+	
+	
+
+	<div class="container">
+	  <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+	    <div class="col-md-4 d-flex align-items-center">
+	      <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+	        <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+	      </a>
+	      <span class="text-muted">© 2021 ALUG, Inc</span>
+	    </div>
+
+	    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+	      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg></a></li>
+	      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+	      <li class="ms-3"><a class="text-muted" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
+	    </ul>
+	  </footer>
+	</div>
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Pagamento realizado com sucesso!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+		Já registramos seu pagamento. Um e-mail de confirmação será enviado para a sua conta.      
+		</div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<button class="enableEthereumButton" style="padding-bottom: -1000px;"></button>
+	<script type="text/javascript">
+		const ethereumButton = document.querySelector('.enableEthereumButton');
+
+		ethereumButton.addEventListener('click', () => {
+		  //Will Start the metamask extension
+		  ethereum.request({ method: 'eth_requestAccounts' });
+		});
+
+		const ethEnabled = async () => {
+		  if (window.ethereum) {
+    			await window.ethereum.send('eth_requestAccounts');
+					window.web3 = new Web3(window.ethereum);
+					window.Seguro = new window.web3.eth.Contract([
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "duracaoContrato",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "aluguel",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "parcelas",
+								"type": "uint256"
+							}
+						],
+						"name": "contratarSeguro",
+						"outputs": [
+							{
+								"internalType": "uint256",
+								"name": "cadastro",
+								"type": "uint256"
+							}
+						],
+						"stateMutability": "nonpayable",
+						"type": "function"
+					},
+					{
+						"inputs": [],
+						"name": "devolucao",
+						"outputs": [
+							{
+								"internalType": "uint256",
+								"name": "dinheiroDevolvido",
+								"type": "uint256"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [
+							{
+								"internalType": "uint256",
+								"name": "cadastro",
+								"type": "uint256"
+							}
+						],
+						"name": "getDados",
+						"outputs": [
+							{
+								"internalType": "address",
+								"name": "carteira",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "pagamentos",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "recebimentoSinistro",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "duracaoContrato",
+								"type": "uint256"
+							},
+							{
+								"internalType": "bool",
+								"name": "ehSegurado",
+								"type": "bool"
+							},
+							{
+								"internalType": "uint256",
+								"name": "valorApolice",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "ParcelaPremio",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "valorSinistro",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "aluguel",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "parcelasApolice",
+								"type": "uint256"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [],
+						"name": "getInformacao",
+						"outputs": [
+							{
+								"internalType": "address",
+								"name": "",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [],
+						"name": "getMontante",
+						"outputs": [
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "",
+								"type": "uint256"
+							}
+						],
+						"stateMutability": "view",
+						"type": "function"
+					},
+					{
+						"inputs": [],
+						"name": "pagarPremio",
+						"outputs": [],
+						"stateMutability": "payable",
+						"type": "function"
+					},
+					{
+						"inputs": [],
+						"name": "receberSinistro",
+						"outputs": [],
+						"stateMutability": "payable",
+						"type": "function"
+					}
+				], '0x84734C4b413fab6c9782aEFa48916368d741a4a6');
+					saveCoinbase();
+					return true;
+  		  }
+		  return false;
+		}
+
+
+		async function saveCoinbase () {
+		  window.coinbase = await window.web3.eth.getCoinbase();
+		};
+
+
+		async function contratarSeguro () {
+			var duracaoContrato = document.getElementById("duracaoContrato").value;
+			var aluguel = document.getElementById("aluguel").value;
+			var parcelas = document.getElementById("parcelas").value;
+		  	window.Seguro.methods.contratarSeguro(duracaoContrato,aluguel,parcelas).send(duracaoContrato,aluguel,parcelas, {from:window.coinbase}).then(console.log);
+
+		}
+
+		async function pagarPremio () {
+		  window.Seguro.methods.pagarPremio().send({from:window.coinbase});
+		}
+
+		async function pagarSinistro () {
+		  window.Seguro.methods.receberSinistro().send({from:window.coinbase});
+		}
+		async function devolucao () {
+		  window.Seguro.methods.devolucao().send({from:window.coinbase});
+		}
+
+		async function getDados () {
+			var cadastro = document.getElementById("cadastro").value;
+		  	var dados = window.Seguro.methods.getDados(cadastro).call({from:window.coinbase});
+		  	var val = await dados;
+
+		  	document.getElementById("carteira").value = val[0];
+		  	document.getElementById("pagamentoPremio").value = val[1];
+		  	document.getElementById("recebimentoSinistro").value = val[2];
+		  	document.getElementById("duracaoContrato").value = val[3];
+		  	document.getElementById("ehSegurado").value = val[4];
+		  	document.getElementById("valorApolice").value = val[5];
+		  	document.getElementById("premioParcelado").value = val[6];
+		  	document.getElementById("valorSinistro").value = val[7];
+		  	document.getElementById("aluguel").value = val[8];
+		  	document.getElementById("parcelasApolice").value = val[9];
+		};
+		async function getInformacao () {
+		  var dados = window.Seguro.methods.getInformacao().call({from:window.coinbase});
+		  var val = await dados;
+
+		  document.getElementById("carteira").value = val[0];
+		  document.getElementById("pagamentoPremio").value = val[1];
+		  document.getElementById("valorApolice").value = val[2];
+		  document.getElementById("premioParcelado").value = val[3];
+		  document.getElementById("parcelasApolice").value = val[4];
+		}
+		async function getMontante () {
+		  window.Seguro.methods.getMontante().call({from:window.coinbase});
+		}
+
+		if (!ethEnabled()) {
+		  alert("Metamask or browser with Ethereum not detected!");
+		}
+	</script>
+
+
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+
+</body>
+</html>
+
+
+  
